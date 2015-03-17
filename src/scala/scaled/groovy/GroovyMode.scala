@@ -52,7 +52,7 @@ object GroovyConfig extends Config.Defs {
 
 @Major(name="groovy",
        tags=Array("code", "project", "groovy"),
-       pats=Array(".*\\.groovy"),
+       pats=Array(".*\\.groovy", ".*\\.gradle"),
        ints=Array("groovy"),
        desc="A major editing mode for the Groovy language.")
 class GroovyMode (env :Env) extends GrammarCodeMode(env) {
