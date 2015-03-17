@@ -1,0 +1,8 @@
+   name: groovy-mode
+ source: git:https://github.com/scaled/groovy-mode.git
+version: 1.0
+descrip: Provides language support for Groovy.
+ weburl: https://github.com/scaled/groovy-mode
+license: New BSD
+ scopts: -deprecation -feature
+ depend: git:https://github.com/scaled/java-mode.git
