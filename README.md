@@ -10,4 +10,4 @@ Scaled Groovy Mode is released under the New BSD License. The most recent versio
 available at http://github.com/scaled/groovy-mode
 
 [Scaled]: https://github.com/scaled/scaled
-[Groovy]: http://groovy.codehaus.org/
+[Groovy]: http://groovy-lang.org/
