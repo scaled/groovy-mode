@@ -47,7 +47,7 @@ object GroovyConfig extends Config.Defs {
     syntaxer("string.quoted.double", Syntax.StringLiteral)
   )
 
-  val grammars = resource("Groovy.ndf")(Grammar.parseNDFs)
+  val grammars = resource(Seq("HTML.ndf", "JavaDoc.ndf", "Groovy.ndf"))(Grammar.parseNDFs)
 }
 
 @Major(name="groovy",

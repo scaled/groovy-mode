@@ -25,7 +25,7 @@ repository:
   multi:
    begin: \bnew\b
    bcaps: 0=keyword.control.new.groovy
-   end: (?<=\)|\])(?!\s*{)|(?<=})|(?=[;])|$
+   end: (?<=\)|\])(?!\s*\{)|(?<=\})|(?=[;])|$
    patterns:
     multi:
      begin: (\w+)\s*(?=\[)
@@ -38,8 +38,8 @@ repository:
        patterns:
         include: #groovy
       multi:
-       begin: {
-       end: (?=})
+       begin: \{
+       end: (?=\})
        patterns:
         include: #groovy
     multi:
@@ -55,8 +55,8 @@ repository:
         include: #groovy
     multi:
      name: meta.inner-class.groovy
-     begin: {
-     end: }
+     begin: \{
+     end: \}
      patterns:
       include: #class-body
  braces:
@@ -82,7 +82,7 @@ repository:
      name: meta.definition.class.inherited.classes.groovy
      begin: extends
      bcaps: 0=storage.modifier.extends.groovy
-     end: (?={|implements)
+     end: (?=\{|implements)
      patterns:
       include: #object-types-inherited
       include: #comments
@@ -96,8 +96,8 @@ repository:
       include: #comments
     multi:
      name: meta.class.body.groovy
-     begin: {
-     end: (?=})
+     begin: \{
+     end: (?=\})
      patterns:
       include: #class-body
  class-body:
@@ -172,7 +172,7 @@ repository:
   multi:
    begin: (?<=;|^)\s*\b([A-Z0-9_]+)(?=\s*(?:,|;|}|\(|$))
    bcaps: 1=constant.enum.name.groovy
-   end: ,|;|(?=})|^(?!\s*\w+\s*(?:,|$))
+   end: ,|;|(?=\})|^(?!\s*\w+\s*(?:,|$))
    patterns:
     multi:
      name: meta.enum.value.groovy
@@ -375,19 +375,19 @@ repository:
    name: meta.throwables.groovy
    begin: throws
    bcaps: 0=storage.modifier.groovy
-   end: (?={|;)|^(?=\s*(?:[^{\s]|$))
+   end: (?=\{|;)|^(?=\s*(?:[^{\s]|$))
    patterns:
     include: #object-types
   multi:
    name: meta.method.body.java
-   begin: {
-   end: (?=})
+   begin: \{
+   end: (?=\})
    patterns:
     include: #groovy-code
  methods:
   multi:
    name: meta.definition.method.groovy
-   begin: (?x:(?<=;|^|{)(?=\s*\
+   begin: (?x:(?<=;|^|\{)(?=\s*\
                 (?:\
                     (?:private|protected|public|native|synchronized|abstract|threadsafe|transient|static|final) # visibility/modifier\
                         |\
@@ -406,7 +406,7 @@ repository:
                 )\
                 \s+\
                 ([^=]+\s+)?\w+\s*\(\
-			))
+   ))
    end: }|(?=[^{])
    patterns:
     include: #method-content
@@ -604,8 +604,8 @@ repository:
   single:
    name: support.function.testing.groovy
    pattern: (?x)\b(?:shouldFail|fail(?:NotEquals)?|ass(?:ume|ert(?:S(?:cript|ame)|N(?:ot(?:Same|\
-					Null)|ull)|Contains|T(?:hat|oString|rue)|Inspect|Equals|False|Length|\
-					ArrayEquals)))\b
+     Null)|ull)|Contains|T(?:hat|oString|rue)|Inspect|Equals|False|Length|\
+     ArrayEquals)))\b
  types:
   single:
    name: storage.type.def.groovy
@@ -638,7 +638,7 @@ repository:
                         [\w\d_<>\[\],\s]+\
                         (?:=|$)\
                         \
-        			))
+           ))
    end: ;|$
    patterns:
     single:
