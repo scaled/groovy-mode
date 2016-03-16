@@ -1,6 +1,6 @@
 //
 // Scaled Groovy Mode - a Scaled major mode for editing Groovy code
-// http://github.com/scaled/groovy-mode/blob/master/LICENSE
+// http://github.com/scaled/scala-mode/blob/master/LICENSE
 
 package scaled.groovy
 
@@ -24,18 +24,23 @@ object GroovyConfig extends Config.Defs {
 
     effacer("entity.name.package", moduleStyle),
     effacer("entity.name.class", typeStyle),
+    effacer("entity.name.type.class", typeStyle),
     effacer("entity.other.inherited-class", typeStyle),
     effacer("entity.name.function", functionStyle),
     effacer("entity.name.val-declaration", variableStyle),
 
-    effacer("storage.modifier", keywordStyle),
-    effacer("storage.type.primitive", typeStyle),
+    // effacer("meta.definition.method.groovy", functionStyle),
+    effacer("meta.method.groovy", functionStyle),
 
-    effacer("variable.package", moduleStyle),
+    effacer("storage.modifier.import", moduleStyle),
+    effacer("storage.modifier", keywordStyle),
+    effacer("storage.type.annotation", preprocessorStyle),
+    effacer("storage.type.def", keywordStyle),
+    effacer("storage.type", typeStyle),
+
     effacer("variable.import", typeStyle),
     effacer("variable.language", constantStyle),
-    // effacer("variable.parameter", variableStyle), // leave params white
-    effacer("variable.other.type", variableStyle)
+    effacer("variable.parameter", variableStyle)
   )
 
   // map TextMate grammar scopes to Scaled syntax definitions

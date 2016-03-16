@@ -25,7 +25,7 @@ repository:
   multi:
    begin: \bnew\b
    bcaps: 0=keyword.control.new.groovy
-   end: (?<=\)|\])(?!\s*\{)|(?<=\})|(?=[;])|$
+   end: (?<=\)|\])(?!\s*\{)|(?<=})|(?=[;])|$
    patterns:
     multi:
      begin: (\w+)\s*(?=\[)
@@ -39,7 +39,7 @@ repository:
         include: #groovy
       multi:
        begin: \{
-       end: (?=\})
+       end: (?=})
        patterns:
         include: #groovy
     multi:
@@ -49,14 +49,14 @@ repository:
       include: #object-types
       multi:
        begin: \(
-       bcaps: 1=storage.type.groovy
+       bcaps: 0=storage.type.groovy
        end: \)
        patterns:
         include: #groovy
     multi:
      name: meta.inner-class.groovy
      begin: \{
-     end: \}
+     end: }
      patterns:
       include: #class-body
  braces:
@@ -97,7 +97,7 @@ repository:
     multi:
      name: meta.class.body.groovy
      begin: \{
-     end: (?=\})
+     end: (?=})
      patterns:
       include: #class-body
  class-body:
@@ -172,7 +172,7 @@ repository:
   multi:
    begin: (?<=;|^)\s*\b([A-Z0-9_]+)(?=\s*(?:,|;|}|\(|$))
    bcaps: 1=constant.enum.name.groovy
-   end: ,|;|(?=\})|^(?!\s*\w+\s*(?:,|$))
+   end: ,|;|(?=})|^(?!\s*\w+\s*(?:,|$))
    patterns:
     multi:
      name: meta.enum.value.groovy
@@ -381,7 +381,7 @@ repository:
   multi:
    name: meta.method.body.java
    begin: \{
-   end: (?=\})
+   end: (?=})
    patterns:
     include: #groovy-code
  methods:
