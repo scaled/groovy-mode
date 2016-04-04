@@ -72,23 +72,13 @@ class GroovyMode (env :Env) extends GrammarCodeMode(env) {
   override protected def createIndenter = new GroovyIndenter(config)
 
   override val commenter = new Commenter() {
-    val atCmdM = Matcher.regexp("@[a-z]+")
-
     override def linePrefix  = "//"
     override def blockOpen = "/*"
     override def blockPrefix = "*"
     override def blockClose = "*/"
     override def docOpen   = "/**"
 
-    override def mkParagrapher (syn :Syntax, buf :Buffer) = new CommentParagrapher(syn, buf) {
-      private def isAtCmdLine (line :LineV) = line.matches(atCmdM, commentStart(line))
-      // don't extend paragraph upwards if the current top is an @cmd
-      override def canPrepend (row :Int) =
-        super.canPrepend(row) && !isAtCmdLine(line(row+1))
-      // don't extend paragraph downwards if the new line is at an @cmd
-      override def canAppend (row :Int) =
-        super.canAppend(row) && !isAtCmdLine(line(row))
-    }
+    override def mkParagrapher (syn :Syntax, buf :Buffer) = new DocCommentParagrapher(syn, buf)
   }
 
   // TODO: more things!
