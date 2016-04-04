@@ -48,7 +48,6 @@ object GroovyConfig extends Config.Defs {
     syntaxer("comment.line", Syntax.LineComment),
     syntaxer("comment.block", Syntax.DocComment),
     syntaxer("constant", Syntax.OtherLiteral),
-    syntaxer("string.quoted.triple", Syntax.HereDocLiteral),
     syntaxer("string.quoted.double", Syntax.StringLiteral)
   )
 
@@ -63,7 +62,6 @@ object GroovyConfig extends Config.Defs {
 class GroovyMode (env :Env) extends GrammarCodeMode(env) {
   import CodeConfig._
   import scaled.util.Chars._
-  import Syntax.{HereDocLiteral => HD}
 
   override def configDefs = GroovyConfig :: super.configDefs
 
@@ -71,19 +69,7 @@ class GroovyMode (env :Env) extends GrammarCodeMode(env) {
   override def effacers = GroovyConfig.effacers
   override def syntaxers = GroovyConfig.syntaxers
 
-  override def mkParagrapher (syntax :Syntax) =
-    if (syntax != HD) super.mkParagrapher(syntax)
-    else new Paragrapher(syntax, buffer) {
-      override def isDelim (row :Int) = super.isDelim(row) || {
-        val ln = line(row)
-        (ln.syntaxAt(0) != HD) || (ln.syntaxAt(ln.length-1) != HD)
-      }
-    }
-
   override protected def createIndenter = new GroovyIndenter(config)
-
-  override protected def canAutoFill (p :Loc) :Boolean =
-    super.canAutoFill(p) || (buffer.syntaxNear(p) == HD)
 
   override val commenter :GroovyCommenter = new GroovyCommenter() {
     // the groovy grammar marks all whitespace leading up to the open doc in comment style, so we
