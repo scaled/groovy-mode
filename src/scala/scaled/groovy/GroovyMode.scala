@@ -71,27 +71,24 @@ class GroovyMode (env :Env) extends GrammarCodeMode(env) {
 
   override protected def createIndenter = new GroovyIndenter(config)
 
-  override val commenter :GroovyCommenter = new GroovyCommenter() {
-    // the groovy grammar marks all whitespace leading up to the open doc in comment style, so we
-    // have to hack this predicate a bit
-    override def inDoc (buffer :BufferV, p :Loc) :Boolean = {
-      super.inDoc(buffer, p) && {
-        val line = buffer.line(p)
-        (line.indexOf(openDocM, p.col) == -1)
-      }
+  override val commenter = new Commenter() {
+    val atCmdM = Matcher.regexp("@[a-z]+")
+
+    override def linePrefix  = "//"
+    override def blockOpen = "/*"
+    override def blockPrefix = "*"
+    override def blockClose = "*/"
+    override def docOpen   = "/**"
+
+    override def mkParagrapher (syn :Syntax, buf :Buffer) = new CommentParagrapher(syn, buf) {
+      private def isAtCmdLine (line :LineV) = line.matches(atCmdM, commentStart(line))
+      // don't extend paragraph upwards if the current top is an @cmd
+      override def canPrepend (row :Int) =
+        super.canPrepend(row) && !isAtCmdLine(line(row+1))
+      // don't extend paragraph downwards if the new line is at an @cmd
+      override def canAppend (row :Int) =
+        super.canAppend(row) && !isAtCmdLine(line(row))
     }
-  }
-
-  //
-  // FNs
-
-  override def electricNewline () {
-    // shenanigans to determine whether we should auto-insert the doc prefix (* )
-    if (commenter.inDoc(buffer, view.point())) {
-      newline()
-      view.point() = commenter.insertDocPre(buffer, view.point())
-      reindentAtPoint()
-    } else super.electricNewline()
   }
 
   // TODO: more things!
