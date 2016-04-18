@@ -77,8 +77,6 @@ class GroovyMode (env :Env) extends GrammarCodeMode(env) {
     override def blockPrefix = "*"
     override def blockClose = "*/"
     override def docOpen   = "/**"
-
-    override def mkParagrapher (syn :Syntax, buf :Buffer) = new DocCommentParagrapher(syn, buf)
   }
 
   // TODO: more things!
