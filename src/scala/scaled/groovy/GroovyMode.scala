@@ -45,10 +45,10 @@ object GroovyConfig extends Config.Defs {
 
   // map TextMate grammar scopes to Scaled syntax definitions
   val syntaxers = List(
-    syntaxer("comment.line", Syntax.LineComment),
+    syntaxer("comment.line",  Syntax.LineComment),
     syntaxer("comment.block", Syntax.DocComment),
-    syntaxer("constant", Syntax.OtherLiteral),
-    syntaxer("string.quoted.double", Syntax.StringLiteral)
+    syntaxer("constant",      Syntax.OtherLiteral),
+    syntaxer("string.quoted", Syntax.StringLiteral)
   )
 
   val grammars = resource(Seq("HTML.ndf", "JavaDoc.ndf", "Groovy.ndf"))(Grammar.parseNDFs)
