@@ -5,54 +5,8 @@
 package scaled.groovy
 
 import scaled._
-import scaled.code.{CodeConfig, Commenter}
-import scaled.grammar.{Grammar, GrammarConfig, GrammarCodeMode}
-import scaled.util.Paragrapher
-
-object GroovyConfig extends Config.Defs {
-  import CodeConfig._
-  import GrammarConfig._
-
-  // map TextMate grammar scopes to Scaled style definitions
-  val effacers = List(
-    effacer("comment.line", commentStyle),
-    effacer("comment.block", docStyle),
-    effacer("constant", constantStyle),
-    effacer("invalid", invalidStyle),
-    effacer("keyword", keywordStyle),
-    effacer("string", stringStyle),
-
-    effacer("entity.name.package", moduleStyle),
-    effacer("entity.name.class", typeStyle),
-    effacer("entity.name.type.class", typeStyle),
-    effacer("entity.other.inherited-class", typeStyle),
-    effacer("entity.name.function", functionStyle),
-    effacer("entity.name.val-declaration", variableStyle),
-
-    // effacer("meta.definition.method.groovy", functionStyle),
-    effacer("meta.method.groovy", functionStyle),
-
-    effacer("storage.modifier.import", moduleStyle),
-    effacer("storage.modifier", keywordStyle),
-    effacer("storage.type.annotation", preprocessorStyle),
-    effacer("storage.type.def", keywordStyle),
-    effacer("storage.type", typeStyle),
-
-    effacer("variable.import", typeStyle),
-    effacer("variable.language", constantStyle),
-    effacer("variable.parameter", variableStyle)
-  )
-
-  // map TextMate grammar scopes to Scaled syntax definitions
-  val syntaxers = List(
-    syntaxer("comment.line",  Syntax.LineComment),
-    syntaxer("comment.block", Syntax.DocComment),
-    syntaxer("constant",      Syntax.OtherLiteral),
-    syntaxer("string.quoted", Syntax.StringLiteral)
-  )
-
-  val grammars = resource(Seq("HTML.ndf", "JavaDoc.ndf", "Groovy.ndf"))(Grammar.parseNDFs)
-}
+import scaled.code.Commenter
+import scaled.grammar.GrammarCodeMode
 
 @Major(name="groovy",
        tags=Array("code", "project", "groovy"),
@@ -60,14 +14,8 @@ object GroovyConfig extends Config.Defs {
        ints=Array("groovy"),
        desc="A major editing mode for the Groovy language.")
 class GroovyMode (env :Env) extends GrammarCodeMode(env) {
-  import CodeConfig._
-  import scaled.util.Chars._
 
-  override def configDefs = GroovyConfig :: super.configDefs
-
-  override def grammars = GroovyConfig.grammars.get
-  override def effacers = GroovyConfig.effacers
-  override def syntaxers = GroovyConfig.syntaxers
+  override def langScope = "source.groovy"
 
   override protected def createIndenter = new GroovyIndenter(config)
 
