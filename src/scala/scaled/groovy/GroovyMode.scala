@@ -10,7 +10,7 @@ import scaled.grammar.GrammarCodeMode
 
 @Major(name="groovy",
        tags=Array("code", "project", "groovy"),
-       pats=Array(".*\\.groovy", ".*\\.gradle"),
+       pats=Array(".*\\.groovy", ".*\\.gradle", "Jenkinsfile"),
        ints=Array("groovy"),
        desc="A major editing mode for the Groovy language.")
 class GroovyMode (env :Env) extends GrammarCodeMode(env) {
